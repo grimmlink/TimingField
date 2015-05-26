@@ -1,0 +1,23 @@
+{
+    "name": "grimmlink/timingfield",
+    "version": "1.0",
+    "description": "A jquery plugin to transform a timestamp field into an hours/minutes/seconds selector.",
+    "homepage": "https://github.com/grimmlink/TimingField",
+	"license": [
+		"MIT"
+	],
+    "authors": [
+        {
+            "name": "Guillaume FREMONT",
+            "email": "grimmlink@gmail.com"
+        }
+    ],
+	"support": {
+		"source": "https://github.com/grimmlink/TimingField/"
+	},
+    "prefer-stable": true,
+    "require": {
+        "components/jquery": "1.4.*",
+        "twbs/bootstrap": "3.*"
+    }
+}

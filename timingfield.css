@@ -1,0 +1,29 @@
+.timingfield_hours,
+.timingfield_minutes,
+.timingfield_seconds {
+  display: inline-block;
+  width: 80px;
+}
+
+.timingfield_hours .timingfield_next,
+.timingfield_minutes .timingfield_next,
+.timingfield_seconds .timingfield_next {
+  border-radius: 3px 3px 0 0;
+  border-bottom: 0 none;
+}
+
+.timingfield_hours input,
+.timingfield_hours .input-group-addon,
+.timingfield_minutes input,
+.timingfield_minutes .input-group-addon,
+.timingfield_seconds input,
+.timingfield_seconds .input-group-addon {
+  border-radius: 0;
+}
+
+.timingfield_hours .timingfield_prev,
+.timingfield_minutes .timingfield_prev,
+.timingfield_seconds .timingfield_prev {
+  border-radius: 0 0 3px 3px;
+  border-top: 0 none;
+}

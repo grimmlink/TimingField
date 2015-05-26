@@ -1,0 +1,21 @@
+.timingfield_hours,
+.timingfield_minutes,
+.timingfield_seconds {
+    display: inline-block;
+    width: 80px;
+    
+    .timingfield_next {
+        border-radius: 3px 3px 0 0;
+        border-bottom: 0 none;
+    }
+    
+    input,
+    .input-group-addon {
+        border-radius: 0;
+    }
+    
+    .timingfield_prev {
+        border-radius: 0 0 3px 3px;
+        border-top: 0 none;
+    }
+}
