@@ -17,7 +17,6 @@
 	},
     "prefer-stable": true,
     "require": {
-        "components/jquery": "1.4.*",
-        "twbs/bootstrap": "3.*"
+        "components/jquery": "1.4.*"
     }
 }
