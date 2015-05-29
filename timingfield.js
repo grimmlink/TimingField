@@ -54,7 +54,7 @@
                 this.getHours().value,
                 this.getMinutes().value,
                 this.getSeconds().value
-            ));
+            )).trigger( "change" );
         },
         upHour: function() {
             if (this.getHours().value < this.settings.maxHour) {
