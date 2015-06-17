@@ -19,6 +19,7 @@
 .timingfield_seconds input,
 .timingfield_seconds .input-group-addon {
   border-radius: 0;
+  width: 50%;
 }
 
 .timingfield_hours .timingfield_prev,
