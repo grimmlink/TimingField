@@ -16,8 +16,11 @@
             input,
             .input-group-addon {
                 border-radius: 0;
-                width: 50%;
                 text-align: center;
+            }
+            
+            .input-group-addon {
+                width: 50%;
             }
         }
         

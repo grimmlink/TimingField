@@ -25,8 +25,13 @@
 .timingfield .timingfield_seconds .input-group input,
 .timingfield .timingfield_seconds .input-group .input-group-addon {
   border-radius: 0;
-  width: 50%;
   text-align: center;
+}
+
+.timingfield .timingfield_hours .input-group .input-group-addon,
+.timingfield .timingfield_minutes .input-group .input-group-addon,
+.timingfield .timingfield_seconds .input-group .input-group-addon {
+  width: 50%;
 }
 
 .timingfield .timingfield_hours .timingfield_prev,
