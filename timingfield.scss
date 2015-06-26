@@ -1,22 +1,29 @@
-.timingfield_hours,
-.timingfield_minutes,
-.timingfield_seconds {
-    display: inline-block;
-    width: 80px;
-    
-    .timingfield_next {
-        border-radius: 3px 3px 0 0;
-        border-bottom: 0 none;
-    }
-    
-    input,
-    .input-group-addon {
-        border-radius: 0;
-        width: 50%;
-    }
-    
-    .timingfield_prev {
-        border-radius: 0 0 3px 3px;
-        border-top: 0 none;
+.timingfield {
+    .timingfield_hours,
+    .timingfield_minutes,
+    .timingfield_seconds {
+        display: inline-block;
+        width: 32%;
+        
+        .timingfield_next {
+            border-radius: 3px 3px 0 0;
+            border-bottom: 0 none;
+        }
+
+        .input-group {
+            width: 100%;
+        
+            input,
+            .input-group-addon {
+                border-radius: 0;
+                width: 50%;
+                text-align: center;
+            }
+        }
+        
+        .timingfield_prev {
+            border-radius: 0 0 3px 3px;
+            border-top: 0 none;
+        }
     }
 }

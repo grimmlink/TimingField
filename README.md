@@ -27,11 +27,15 @@ Installation with composer :
 Configuration
 -------------
 
-As of now, the only configuration available is the max hour value.
+This is the current available configuration :
 
 ```javascript
 $.fn.timingfield.defaults = {
-    maxHour: 23
+    maxHour:        23
+    width:          263,
+    hoursText:      'H',
+    minutesText:    'M',
+    secondsText:    'S'
 };
 ```
 
