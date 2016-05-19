@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TimingField</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen" />
+        <link href="timingfield.css" type="text/css" rel="stylesheet" media="screen" />
+    </head>
+    <body>
+        <input type="text" class="timing" />
+        
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="timingfield.js"></script>
+        <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".timing").timingfield();
+        });
+        </script>
+    </body>
+</html>
