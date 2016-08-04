@@ -3,6 +3,7 @@
     var TimingField = function(element, options)
     {
         this.elem = $(element);
+        this.disabled = $(element).is(':disabled');
         this.settings = $.extend({}, $.fn.timingfield.defaults, options);
         this.tpl = $($.fn.timingfield.template);
         
@@ -14,6 +15,10 @@
             this.elem.after(this.tpl);
             this.elem.hide();
             var timeoutId = 0;
+            
+            if (this.disabled) {
+                this.tpl.find('input:text').prop('disabled', true);
+            }
             
             this.getHours().value = this.tsToHours(this.elem.val());
             this.getMinutes().value = this.tsToMinutes(this.elem.val());
@@ -29,18 +34,20 @@
                 .on('mousedown', function(e) { timeoutId = setInterval($.proxy(this.upHour, this), 100); return false;  })
             ;
             
-            // +/- triggers
-            this.tpl.find('.timingfield_hours   .timingfield_next').on('mousedown', $.proxy(this.upHour,    this));
-            this.tpl.find('.timingfield_hours   .timingfield_prev').on('mousedown', $.proxy(this.downHour,  this));
-            this.tpl.find('.timingfield_minutes .timingfield_next').on('mousedown', $.proxy(this.upMin,     this));
-            this.tpl.find('.timingfield_minutes .timingfield_prev').on('mousedown', $.proxy(this.downMin,   this));
-            this.tpl.find('.timingfield_seconds .timingfield_next').on('mousedown', $.proxy(this.upSec,     this));
-            this.tpl.find('.timingfield_seconds .timingfield_prev').on('mousedown', $.proxy(this.downSec,   this));
-            
-            // input triggers
-            this.tpl.find('.timingfield_hours   input').on('keyup', $.proxy(this.inputHour, this));
-            this.tpl.find('.timingfield_minutes input').on('keyup', $.proxy(this.inputMin,  this));
-            this.tpl.find('.timingfield_seconds input').on('keyup', $.proxy(this.inputSec,  this));
+            if (!this.disabled) {
+                // +/- triggers
+                this.tpl.find('.timingfield_hours   .timingfield_next').on('mousedown', $.proxy(this.upHour,    this));
+                this.tpl.find('.timingfield_hours   .timingfield_prev').on('mousedown', $.proxy(this.downHour,  this));
+                this.tpl.find('.timingfield_minutes .timingfield_next').on('mousedown', $.proxy(this.upMin,     this));
+                this.tpl.find('.timingfield_minutes .timingfield_prev').on('mousedown', $.proxy(this.downMin,   this));
+                this.tpl.find('.timingfield_seconds .timingfield_next').on('mousedown', $.proxy(this.upSec,     this));
+                this.tpl.find('.timingfield_seconds .timingfield_prev').on('mousedown', $.proxy(this.downSec,   this));
+                
+                // input triggers
+                this.tpl.find('.timingfield_hours   input').on('keyup', $.proxy(this.inputHour, this));
+                this.tpl.find('.timingfield_minutes input').on('keyup', $.proxy(this.inputMin,  this));
+                this.tpl.find('.timingfield_seconds input').on('keyup', $.proxy(this.inputSec,  this));
+            }
         },
         getHours: function() {
             return this.tpl.find('.timingfield_hours input')[0];
