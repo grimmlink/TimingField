@@ -3,7 +3,7 @@
     var TimingField = function(element, options)
     {
         this.elem = $(element);
-        this.disabled = $(element).is(':disabled');
+        this.disabled = false;
         this.settings = $.extend({}, $.fn.timingfield.defaults, options);
         this.tpl = $($.fn.timingfield.template);
         
@@ -16,8 +16,8 @@
             this.elem.hide();
             var timeoutId = 0;
             
-            if (this.disabled) {
-                this.tpl.find('input:text').prop('disabled', true);
+            if (this.elem.is(':disabled')) {
+                this.disable();
             }
             
             this.getHours().value = this.tsToHours(this.elem.val());
@@ -34,20 +34,21 @@
                 .on('mousedown', function(e) { timeoutId = setInterval($.proxy(this.upHour, this), 100); return false;  })
             ;
             
-            if (!this.disabled) {
-                // +/- triggers
-                this.tpl.find('.timingfield_hours   .timingfield_next').on('mousedown', $.proxy(this.upHour,    this));
-                this.tpl.find('.timingfield_hours   .timingfield_prev').on('mousedown', $.proxy(this.downHour,  this));
-                this.tpl.find('.timingfield_minutes .timingfield_next').on('mousedown', $.proxy(this.upMin,     this));
-                this.tpl.find('.timingfield_minutes .timingfield_prev').on('mousedown', $.proxy(this.downMin,   this));
-                this.tpl.find('.timingfield_seconds .timingfield_next').on('mousedown', $.proxy(this.upSec,     this));
-                this.tpl.find('.timingfield_seconds .timingfield_prev').on('mousedown', $.proxy(this.downSec,   this));
-                
-                // input triggers
-                this.tpl.find('.timingfield_hours   input').on('keyup', $.proxy(this.inputHour, this));
-                this.tpl.find('.timingfield_minutes input').on('keyup', $.proxy(this.inputMin,  this));
-                this.tpl.find('.timingfield_seconds input').on('keyup', $.proxy(this.inputSec,  this));
-            }
+            // +/- triggers
+            this.tpl.find('.timingfield_hours   .timingfield_next').on('mousedown', $.proxy(this.upHour,    this));
+            this.tpl.find('.timingfield_hours   .timingfield_prev').on('mousedown', $.proxy(this.downHour,  this));
+            this.tpl.find('.timingfield_minutes .timingfield_next').on('mousedown', $.proxy(this.upMin,     this));
+            this.tpl.find('.timingfield_minutes .timingfield_prev').on('mousedown', $.proxy(this.downMin,   this));
+            this.tpl.find('.timingfield_seconds .timingfield_next').on('mousedown', $.proxy(this.upSec,     this));
+            this.tpl.find('.timingfield_seconds .timingfield_prev').on('mousedown', $.proxy(this.downSec,   this));
+            
+            // input triggers
+            this.tpl.find('.timingfield_hours   input').on('keyup', $.proxy(this.inputHour, this));
+            this.tpl.find('.timingfield_minutes input').on('keyup', $.proxy(this.inputMin,  this));
+            this.tpl.find('.timingfield_seconds input').on('keyup', $.proxy(this.inputSec,  this));
+            
+            // change on elem
+            this.elem.on('change', $.proxy(this.change,  this));
         },
         getHours: function() {
             return this.tpl.find('.timingfield_hours input')[0];
@@ -78,95 +79,132 @@
             )).trigger( "change" );
         },
         upHour: function() {
-            if (this.getHours().value < this.settings.maxHour) {
-                this.getHours().value = parseInt(this.getHours().value) + 1;
-                this.updateElem();
-                return true;
+            if (!this.disabled) {
+                if (this.getHours().value < this.settings.maxHour) {
+                    this.getHours().value = parseInt(this.getHours().value) + 1;
+                    this.updateElem();
+                    return true;
+                }
             }
             return false;
         },
         downHour: function() {
-            if (this.getHours().value > 0) {
-                this.getHours().value = parseInt(this.getHours().value) - 1;
-                this.updateElem();
-                return true;
+            if (!this.disabled) {
+                if (this.getHours().value > 0) {
+                    this.getHours().value = parseInt(this.getHours().value) - 1;
+                    this.updateElem();
+                    return true;
+                }
             }
             return false;
         },
         inputHour: function() {
-            if (this.getHours().value < 0) {
-                this.getHours().value = 0;
-            } else if (this.getHours().value > this.settings.maxHour) {
-                this.getHours().value = this.settings.maxHour;
+            if (!this.disabled) {
+                if (this.getHours().value < 0) {
+                    this.getHours().value = 0;
+                } else if (this.getHours().value > this.settings.maxHour) {
+                    this.getHours().value = this.settings.maxHour;
+                }
             }
             
             this.updateElem();
         },
         upMin: function() {
-            if (this.getMinutes().value < 59) {
-                this.getMinutes().value = parseInt(this.getMinutes().value) + 1;
-                this.updateElem();
-                return true;
-            } else if (this.upHour()) {
-                this.getMinutes().value = 0;
-                this.updateElem();
-                return true;
+            if (!this.disabled) {
+                if (this.getMinutes().value < 59) {
+                    this.getMinutes().value = parseInt(this.getMinutes().value) + 1;
+                    this.updateElem();
+                    return true;
+                } else if (this.upHour()) {
+                    this.getMinutes().value = 0;
+                    this.updateElem();
+                    return true;
+                }
             }
+            
             return false;
         },
         downMin: function() {
-            if (this.getMinutes().value > 0) {
-                this.getMinutes().value = parseInt(this.getMinutes().value) - 1;
-                this.updateElem();
-                return true;
-            } else if (this.downHour()) {
-                this.getMinutes().value = 59;
-                this.updateElem();
-                return true;
+            if (!this.disabled) {
+                if (this.getMinutes().value > 0) {
+                    this.getMinutes().value = parseInt(this.getMinutes().value) - 1;
+                    this.updateElem();
+                    return true;
+                } else if (this.downHour()) {
+                    this.getMinutes().value = 59;
+                    this.updateElem();
+                    return true;
+                }
             }
+            
             return false;
         },
         inputMin: function() {
-            if (this.getMinutes().value < 0) {
-                this.getMinutes().value = 0;
-            } else if (this.getMinutes().value > 59) {
-                this.getMinutes().value = 59;
+            if (!this.disabled) {
+                if (this.getMinutes().value < 0) {
+                    this.getMinutes().value = 0;
+                } else if (this.getMinutes().value > 59) {
+                    this.getMinutes().value = 59;
+                }
+                
+                this.updateElem();
             }
-            
-            this.updateElem();
         },
         upSec: function() {
-            if (this.getSeconds().value < 59) {
-                this.getSeconds().value = parseInt(this.getSeconds().value) + 1;
-                this.updateElem();
-                return true;
-            } else if (this.upMin()) {
-                this.getSeconds().value = 0;
-                this.updateElem();
-                return true;
+            if (!this.disabled) {
+                if (this.getSeconds().value < 59) {
+                    this.getSeconds().value = parseInt(this.getSeconds().value) + 1;
+                    this.updateElem();
+                    return true;
+                } else if (this.upMin()) {
+                    this.getSeconds().value = 0;
+                    this.updateElem();
+                    return true;
+                }
             }
+            
             return false;
         },
         downSec: function() {
-            if (this.getSeconds().value > 0) {
-                this.getSeconds().value = parseInt(this.getSeconds().value) - 1;
-                this.updateElem();
-                return true;
-            } else if (this.downMin()) {
-                this.getSeconds().value = 59;
-                this.updateElem();
-                return true;
+            if (!this.disabled) {
+                if (this.getSeconds().value > 0) {
+                    this.getSeconds().value = parseInt(this.getSeconds().value) - 1;
+                    this.updateElem();
+                    return true;
+                } else if (this.downMin()) {
+                    this.getSeconds().value = 59;
+                    this.updateElem();
+                    return true;
+                }
             }
+            
             return false;
         },
         inputSec: function() {
-            if (this.getSeconds().value < 0) {
-                this.getSeconds().value = 0;
-            } else if (this.getSeconds().value > 59) {
-                this.getSeconds().value = 59;
+            if (!this.disabled) {
+                if (this.getSeconds().value < 0) {
+                    this.getSeconds().value = 0;
+                } else if (this.getSeconds().value > 59) {
+                    this.getSeconds().value = 59;
+                }
+                
+                this.updateElem();
             }
-            
-            this.updateElem();
+        },
+        disable: function() {
+            this.disabled = true;
+            this.tpl.find('input:text').prop('disabled', true);
+        },
+        enable: function() {
+            this.disabled = false;
+            this.tpl.find('input:text').prop('disabled', false);
+        },
+        change: function() {
+            if (this.elem.is(':disabled')) {
+                this.disable();
+            } else {
+                this.enable();
+            }
         },
     };
     
