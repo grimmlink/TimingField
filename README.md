@@ -18,7 +18,7 @@ Installation with composer :
     ...
     "require": {
         ...
-        "grimmlink/timingfield": "1.0",
+        "grimmlink/timingfield": "1.1",
         ...
     },
     ...
@@ -35,7 +35,8 @@ $.fn.timingfield.defaults = {
     width:          263,
     hoursText:      'H',
     minutesText:    'M',
-    secondsText:    'S'
+    secondsText:    'S',
+    hasSeconds:     true
 };
 ```
 
