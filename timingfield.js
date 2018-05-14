@@ -82,7 +82,7 @@
                 timestamp += parseInt(this.getSeconds().value);
             }
 
-            this.elem.val(timestamp).trigger( "change" );
+            this.elem.val(timestamp).trigger( "change" ).trigger( "input" );
         },
         upHour: function() {
             if (!this.disabled) {
