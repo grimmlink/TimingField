@@ -36,11 +36,6 @@
             this.tpl.find('.timingfield_minutes .input-group-addon').text(this.settings.minutesText);
             this.tpl.find('.timingfield_seconds .input-group-addon').text(this.settings.secondsText);
 
-            this.tpl.find('.timingfield_hours .timingfield_next')
-                .on('mouseup', function() { clearInterval(timeoutId); return false; })
-                .on('mousedown', function(e) { timeoutId = setInterval($.proxy(this.upHour, this), 100); return false;  })
-            ;
-
             // +/- triggers
             this.tpl.find('.timingfield_hours   .timingfield_next').on('mousedown', $.proxy(this.upHour,    this));
             this.tpl.find('.timingfield_hours   .timingfield_prev').on('mousedown', $.proxy(this.downHour,  this));
